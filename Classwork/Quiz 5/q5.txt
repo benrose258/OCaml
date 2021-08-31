@@ -1,0 +1,27 @@
+Ben Rose
+Quiz 5
+I pledge my honor that I have abided by the Stevens Honor System.
+
+letrec sizet t ->
+eval_expr t >>= tree_of_treeVal >>= fun mytree ->
+match mytree with
+| Empty -> 0
+| Node(d,lt,rt) -> 1 + sizet lt + sizet rt
+in sizet
+
+letrec mapt f t ->
+eval_expr f >>= fun myfunc ->
+eval_expr t >>= tree_of_treeVal >>= fun mytree ->
+match mytree with
+| Empty -> Empty
+| Node(d,lt,rt) -> Node(myfunc d, mapt f lt, mapt f rt)
+in mapt
+
+letrec foldt f a t =
+eval_expr f >>= fun myfunc ->
+eval_expr a >>= fun varA ->
+eval_expr t >>= tree_of_treeVal >>= fun mytree ->
+match mytree with
+| Empty -> varA
+| Node(d,lt,rt) -> myfunc d (foldt myfunc varA lt) (foldt myfunc varA rt)
+in foldt

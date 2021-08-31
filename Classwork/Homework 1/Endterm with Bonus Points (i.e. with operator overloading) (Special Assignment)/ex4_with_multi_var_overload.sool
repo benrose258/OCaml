@@ -1,0 +1,49 @@
+class counter extends object {
+     field c
+     method initialize() {
+        set c=1
+  }
+    method inc() {
+        send self inc(1)
+  }
+    method inc(i) {
+        set c = c+i
+  }
+    method inc(x, y, z) {
+        send self inc(x);
+        send self inc(y);
+        send self inc()
+  }
+    method dec() {
+        send self dec(1)
+  }
+    method dec(x) {
+        set c=c-x
+  }
+    method dec(x, y) {
+        send self dec(x);
+        send self dec(y)
+  }
+    method inc_and_dec_with_multiple_variables
+            _just_increments_and_decrements
+            _by_whatever_variables_are_in_that_function
+            _also_this_functions_result_doesnt_matter_as_its_just_a_note() {
+        c
+  }
+
+    method read() {
+        c
+  }
+}
+
+
+let nc = new counter()
+in begin
+    send nc inc();
+    send nc inc(20);
+    send nc dec(4);
+    send nc inc();
+    send nc inc(80000, 66, 19);
+    send nc dec(10, 9);
+    send nc read()
+  end
